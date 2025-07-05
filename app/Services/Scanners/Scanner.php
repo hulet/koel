@@ -2,6 +2,7 @@
 
 namespace App\Services\Scanners;
 
+use App\Models\User;
 use App\Repositories\SongRepository;
 use App\Services\SongService;
 use App\Values\Scanning\ScanConfiguration;
@@ -23,6 +24,16 @@ abstract class Scanner
     {
         try {
             $info = $this->fileScanner->scan($path);
+
+            // Update $config based on the path
+            if (str_contains($path, '/music/steve/')) {
+                $config->owner = User::find(1); // Assign User model instance
+            } elseif (str_contains($path, '/music/katie/')) {
+                $config->owner = User::find(2); // Assign User model instance
+            } elseif (str_contains($path, '/music/kids/')) {
+                $config->owner = User::find(3); // Assign User model instance
+            }
+
             $song = $this->songService->createOrUpdateSongFromScan($info, $config);
 
             if ($song->wasRecentlyCreated) {
