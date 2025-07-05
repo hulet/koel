@@ -12,7 +12,7 @@
       </div>
 
       <div class="current-version">
-        Koel {{ currentVersion }}
+        Koel {{ currentVersion }}-patched
         <span v-if="isPlus" class="badge">Plus</span>
         <span v-else>Community</span>
         Edition
